@@ -15,6 +15,9 @@ const ADMIN_PASS = process.env.ADMIN_PASS || 'admin';
 const DATA_DIR = process.env.DATA_DIR || path.join(__dirname, 'data');
 const DATA_FILE = path.join(DATA_DIR, 'projects.json');
 const PUBLIC_DIR = path.join(__dirname, 'public');
+// Optional URL prefix when behind a reverse proxy that does NOT strip it.
+// Example: BASE_PATH=/dockdock/fun-dashboard
+const BASE_PATH = (process.env.BASE_PATH || '').replace(/\/+$/, '');
 
 const DEFAULT_PROJECTS = [
   { id: 'p1', name: 'Temp Number', url: 'https://prodev.ut.ac.id/dockdock/temp-number/', desc: 'Layanan nomor sementara untuk verifikasi.', icon: '📱' },
@@ -95,6 +98,15 @@ function uid() {
 const app = express();
 app.disable('x-powered-by');
 app.use(express.json({ limit: '32kb' }));
+
+// Strip optional reverse-proxy prefix (e.g. "/dockdock/fun-dashboard")
+// so the app works whether the proxy preserves the prefix or not.
+app.use((req, _res, next) => {
+  if (BASE_PATH && req.url.startsWith(BASE_PATH)) {
+    req.url = req.url.slice(BASE_PATH.length) || '/';
+  }
+  next();
+});
 
 // Static frontend
 app.use(express.static(PUBLIC_DIR, {

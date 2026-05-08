@@ -9,6 +9,9 @@ services:
       # Ganti kredensial admin di sini (default: admin / admin)
       ADMIN_USER: admin
       ADMIN_PASS: admin
+      # Set ini kalau dibalik reverse proxy yang TIDAK strip prefix.
+      # Kosongkan kalau diakses langsung atau proxy sudah strip prefix.
+      BASE_PATH: /dockdock/fun-dashboard
     volumes:
       # Persist data project di host. Folder ./data dibuat otomatis.
       - ./data:/app/data
