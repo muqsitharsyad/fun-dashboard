@@ -4,7 +4,9 @@
 
 const AUTH_KEY = 'fpd.token.v1';
 const THEME_KEY = 'fpd.theme.v1';
-const API = '/api';
+// Auto-detect base path so it works both at root ("/") and subpath ("/dockdock/fun-dashboard/")
+const BASE = window.location.pathname.replace(/\/[^/]*$/, '/');
+const API = (BASE + 'api').replace(/\/+/g, '/').replace(/\/$/, '');
 
 // ---------- State ----------
 let projects = [];
