@@ -1,0 +1,15 @@
+services:
+  dashboard:
+    build: .
+    image: fun-project-dashboard:latest
+    container_name: fun-project-dashboard
+    ports:
+      - "8080:9000"
+    environment:
+      # Ganti kredensial admin di sini (default: admin / admin)
+      ADMIN_USER: admin
+      ADMIN_PASS: admin
+    volumes:
+      # Persist data project di host. Folder ./data dibuat otomatis.
+      - ./data:/app/data
+    restart: unless-stopped

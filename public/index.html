@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Dashboard kumpulan project saya" />
+  <title>Fun Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>😜</text></svg>" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <h1 class="brand">Fun Dashboard</h1>
+      <nav class="nav">
+        <button id="themeToggle" class="btn btn-ghost" title="Ganti tema" aria-label="Ganti tema">🌙</button>
+        <button id="adminBtn" class="btn btn-primary">Admin</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="search-wrap">
+        <input id="searchInput" type="search" placeholder="🔎 Cari project..." aria-label="Cari project" />
+      </div>
+    </section>
+
+    <section id="projectGrid" class="grid" aria-live="polite"></section>
+
+    <p id="emptyState" class="empty hidden">Belum ada project. Login sebagai admin untuk menambahkan.</p>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <small>&copy; <span id="year"></span> Fun Dashboard. Built with ❤️ vanilla JS.</small>
+    </div>
+  </footer>
+
+  <!-- Login Modal -->
+  <div id="loginModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+    <div class="modal-content">
+      <header class="modal-header">
+        <h3 id="loginTitle">Login Admin</h3>
+        <button class="btn btn-ghost close-btn" data-close aria-label="Tutup">✕</button>
+      </header>
+      <form id="loginForm" class="form">
+        <label>
+          Username
+          <input type="text" id="username" autocomplete="username" required />
+        </label>
+        <label>
+          Password
+          <input type="password" id="password" autocomplete="current-password" required />
+        </label>
+        <p id="loginError" class="error hidden">Username atau password salah.</p>
+        <div class="form-actions">
+          <button type="button" class="btn btn-ghost" data-close>Batal</button>
+          <button type="submit" class="btn btn-primary">Masuk</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Project Form Modal -->
+  <div id="projectModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="projectTitle">
+    <div class="modal-content">
+      <header class="modal-header">
+        <h3 id="projectTitle">Tambah Project</h3>
+        <button class="btn btn-ghost close-btn" data-close aria-label="Tutup">✕</button>
+      </header>
+      <form id="projectForm" class="form">
+        <input type="hidden" id="projectId" />
+        <label>
+          Nama Project
+          <input type="text" id="projectName" required maxlength="80" />
+        </label>
+        <label>
+          URL
+          <input type="url" id="projectUrl" required placeholder="https://..." />
+        </label>
+        <label>
+          Deskripsi
+          <textarea id="projectDesc" rows="3" maxlength="240"></textarea>
+        </label>
+        <label>
+          Emoji / Ikon (opsional)
+          <input type="text" id="projectIcon" maxlength="4" placeholder="🚀" />
+        </label>
+        <div class="form-actions">
+          <button type="button" class="btn btn-ghost" data-close>Batal</button>
+          <button type="submit" class="btn btn-primary">Simpan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Confirm Modal -->
+  <div id="confirmModal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal-content">
+      <header class="modal-header">
+        <h3>Konfirmasi</h3>
+        <button class="btn btn-ghost close-btn" data-close aria-label="Tutup">✕</button>
+      </header>
+      <div class="form">
+        <p id="confirmText">Hapus project ini?</p>
+        <div class="form-actions">
+          <button type="button" class="btn btn-ghost" data-close>Batal</button>
+          <button type="button" id="confirmOk" class="btn btn-danger">Hapus</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
