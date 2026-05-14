@@ -13,6 +13,10 @@ services:
       # Kosongkan kalau diakses langsung atau proxy sudah strip prefix.
       BASE_PATH: /dockdock/fun-dashboard
     volumes:
-      # Persist data project di host. Folder ./data dibuat otomatis.
-      - ./data:/app/data
+      # Named volume — data TIDAK hilang saat "docker compose down"
+      # Hanya hilang kalau eksplisit: "docker compose down -v" atau "docker volume rm"
+      - dashboard_data:/app/data
     restart: unless-stopped
+
+volumes:
+  dashboard_data:
